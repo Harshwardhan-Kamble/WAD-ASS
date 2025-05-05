@@ -1,27 +1,32 @@
-{
-  "New York": {
+[
+  {
+    "city":"New York",
     "temperature": "22°C",
     "humidity": "65%",
     "conditions": "Sunny"
   },
-  "London": {
+  {
+    "city": "London",
     "temperature": "15°C",
     "humidity": "78%",
     "conditions": "Cloudy"
   },
-  "Tokyo": {
+  {
+    "city":"Paris",
     "temperature": "18°C",
     "humidity": "70%",
     "conditions": "Rainy"
   },
-  "Paris": {
+  {
+    "city":"Tokyo",
     "temperature": "20°C",
     "humidity": "60%",
     "conditions": "Clear"
   },
-  "punjab": {
+  {
+    "city":"Sydney",
     "temperature": "20°C",
     "humidity": "60%",
     "conditions": "Clear"
   }
-}
+]
