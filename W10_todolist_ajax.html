@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>To-Do List with AJAX</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 20px;
-    }
+    body { font-family: Arial; background: #f4f4f4; padding: 20px; }
     .todo-container {
       max-width: 400px;
       margin: auto;
@@ -28,10 +24,7 @@
       font-size: 16px;
       cursor: pointer;
     }
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
+    ul { list-style: none; padding-left: 0; }
     li {
       display: flex;
       align-items: center;
@@ -39,14 +32,8 @@
       padding: 8px 0;
       border-bottom: 1px solid #ddd;
     }
-    li.done span {
-      text-decoration: line-through;
-      color: gray;
-    }
-    .actions {
-      display: flex;
-      gap: 5px;
-    }
+    li.done span { text-decoration: line-through; color: gray; }
+    .actions { display: flex; gap: 5px; }
   </style>
 </head>
 <body>
@@ -59,18 +46,22 @@
   </div>
 
   <script>
+    const api = 'http://localhost:3000/tasks';
     let tasks = [];
 
-    // Simulate AJAX fetch from server (localStorage in this case)
-    function fetchTasks() {
-      const stored = localStorage.getItem('tasks');
-      tasks = stored ? JSON.parse(stored) : [];
-      renderTasks();
+    function ajax(method, url, data, callback) {
+      const xhr = new XMLHttpRequest();
+      xhr.open(method, url, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onload = () => callback(xhr.status, xhr.responseText);
+      xhr.send(data ? JSON.stringify(data) : null);
     }
 
-    // Simulate AJAX post to server (localStorage in this case)
-    function saveTasks() {
-      localStorage.setItem('tasks', JSON.stringify(tasks));
+    function fetchTasks() {
+      ajax('GET', api, null, (status, res) => {
+        tasks = JSON.parse(res);
+        renderTasks();
+      });
     }
 
     function renderTasks() {
@@ -112,32 +103,29 @@
       const input = document.getElementById('taskInput');
       const text = input.value.trim();
       if (text !== '') {
-        tasks.push({ text, done: false });
-        saveTasks(); // Simulate AJAX save
-        renderTasks();
-        input.value = '';
+        const newTask = { text, done: false };
+        ajax('POST', api, newTask, () => {
+          fetchTasks();
+          input.value = '';
+        });
       }
     }
 
     function deleteTask(index) {
-      tasks.splice(index, 1);
-      saveTasks(); // Simulate AJAX save
-      renderTasks();
+      ajax('DELETE', `${api}/${index}`, null, () => fetchTasks());
     }
 
     function editTask(index) {
       const newText = prompt("Update task:", tasks[index].text);
       if (newText !== null && newText.trim() !== '') {
         tasks[index].text = newText.trim();
-        saveTasks(); // Simulate AJAX save
-        renderTasks();
+        ajax('PUT', `${api}/${index}`, tasks[index], () => fetchTasks());
       }
     }
 
     function toggleDone(index) {
       tasks[index].done = !tasks[index].done;
-      saveTasks(); // Simulate AJAX save
-      renderTasks();
+      ajax('PUT', `${api}/${index}`, tasks[index], () => fetchTasks());
     }
 
     // Initial load

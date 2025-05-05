@@ -18,5 +18,10 @@
     "temperature": "20°C",
     "humidity": "60%",
     "conditions": "Clear"
+  },
+  "punjab": {
+    "temperature": "20°C",
+    "humidity": "60%",
+    "conditions": "Clear"
   }
 }
