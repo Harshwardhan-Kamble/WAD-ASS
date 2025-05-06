@@ -10,7 +10,7 @@ const port = 3000;
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://pirateking1803:Randi@cluster0.m7aloax.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost:27017')
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.log('MongoDB connection error: ', err));
 
@@ -20,8 +20,7 @@ const songSchema = new mongoose.Schema({
     Film: String,
     Music_director: String,
     Singer: String,
-    Actor: { type: String, default: '' },
-    Actress: { type: String, default: '' }
+   
 });
 
 // Create a model based on the schema

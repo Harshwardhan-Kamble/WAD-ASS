@@ -36,18 +36,13 @@ app.post('/add-employee', (req, res) => {
     joining_date: new Date(joining_date),
   });
 
-  newEmployee.save((err, employee) => {
-    if (err) return res.status(500).send('Error adding employee');
-    res.status(201).send(`Employee added: ${employee.name}`);
-  });
+  newEmployee.save();
 });
 
 // 2. View all employee records
 app.get('/employees', (req, res) => {
-  Employee.find({}, (err, employees) => {
-    if (err) return res.status(500).send('Error fetching employees');
-    res.json(employees);
-  });
+  const emp = Employee.find();
+  res.send(emp);
 });
 
 // 3. Update an existing employee’s details
