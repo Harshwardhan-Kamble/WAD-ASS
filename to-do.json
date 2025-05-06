@@ -1,6 +1,6 @@
 [
-    { "text": "Buy groceries", "done": false },
-    { "text": "Call mom", "done": true },
-    { "text": "Finish homework", "done": false }
+    { "text": "Buy groceries" },
+    { "text": "Call mom" },
+    { "text": "Finish homework" }
   ]
   
